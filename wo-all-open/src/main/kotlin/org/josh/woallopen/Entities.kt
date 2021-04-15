@@ -5,6 +5,7 @@ import javax.persistence.FetchType
 import javax.persistence.GeneratedValue
 import javax.persistence.Id
 import javax.persistence.ManyToOne
+import javax.persistence.OneToMany
 
 @Entity
 class A(
@@ -24,7 +25,10 @@ class B(
     var id: Long = -1,
 
     val name: String = "B"
-)
+) {
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "b", targetEntity = C::class)
+    var cs: List<C> = listOf()
+}
 
 @Entity
 class C(

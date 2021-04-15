@@ -11,6 +11,9 @@ class CRepositoryTest {
     @Autowired
     private lateinit var cRepository: CRepository
 
+    @Autowired
+    private lateinit var bRepository: BRepository
+
     private val logger = KotlinLogging.logger { }
     @Test
     fun `let's get it`() {
@@ -44,6 +47,31 @@ class CRepositoryTest {
         }
 
         logger.info { c?.b?.name }
+
+
+    }
+
+    @Test
+    fun `One To Many Lazy Test`() {
+
+        logger.info {
+            """
+##################
+## BEFORE GET B ##
+##################
+            """
+        }
+        val b = bRepository.findByIdOrNull(1)!!
+
+        logger.info {
+            """
+##################
+## BEFORE ACCESS C ##
+##################
+            """
+        }
+
+        b.cs.forEach { logger.info { it } }
 
 
     }
